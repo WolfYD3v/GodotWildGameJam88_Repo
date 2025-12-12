@@ -25,3 +25,7 @@ folder_colors={
 "res://assets/": "teal",
 "res://resources/": "orange"
 }
+
+[physics]
+
+3d/physics_engine="Jolt Physics"
