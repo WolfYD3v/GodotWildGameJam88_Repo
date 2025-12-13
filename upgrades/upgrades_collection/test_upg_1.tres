@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=3 format=3 uid="uid://dvc78lw74nb16"]
+
+[ext_resource type="Script" uid="uid://dc0l3towrxxfc" path="res://upgrades/upgrade_resource/upgrade.gd" id="1_muttd"]
+[ext_resource type="Texture2D" uid="uid://bf6yf8uknomwh" path="res://assets/sprites/icon.svg" id="2_b1cx8"]
+
+[resource]
+script = ExtResource("1_muttd")
+upg_name = "Test Upg 1"
+upg_description = "A test upgrade"
+upg_texture = ExtResource("2_b1cx8")
+metadata/_custom_type_script = "uid://dc0l3towrxxfc"
