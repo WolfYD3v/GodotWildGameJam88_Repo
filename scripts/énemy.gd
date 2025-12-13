@@ -7,8 +7,8 @@ extends CharacterBody3D
 @export var min_speed: float = 3.0
 @export var max_speed: float = 7.5
 @export_group("Random damage amount")
-@export var min_damage_amount: int = 10
-@export var max_damage_amount: int = 25
+@export var min_damage_amount: int = 2
+@export var max_damage_amount: int = 5
 @export_group("Random vie")
 @export var min_vie: float = 100.0
 @export var max_vie: float = 150.0
@@ -46,6 +46,7 @@ func _ready() -> void:
 	damage_amount = randi_range(min_damage_amount, max_damage_amount)
 	# Set the vie randomly
 	vie = randf_range(min_vie, max_vie)
+	label.text = str(round(vie))
 	# Set the experience dropped randomly
 	experience_dropped = randi_range(min_experience_dropped, max_experience_dropped)
 	# Set the scale_value randomly, and so define the scale
@@ -91,7 +92,7 @@ func _on_navigation_agent_3d_velocity_computed(safe_velocity: Vector3) -> void:
 func damage(damage):
 	vie -= damage
 	check_death()
-	label.text = str(vie)
+	label.text = str(round(vie))
 	
 func check_death():
 	# Vérifie si la vie est à zéro ou en dessous
