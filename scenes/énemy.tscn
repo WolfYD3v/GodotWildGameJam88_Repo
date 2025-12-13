@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://ci8b038gktsym"]
+
+[ext_resource type="Script" uid="uid://bpmphkyuub0af" path="res://scripts/énemy.gd" id="1_4lq86"]
+[ext_resource type="Texture2D" uid="uid://bm26swageks1o" path="res://assets/textures/énemy/expressive-artwork-of-a-cute-and-charming-devil-monster-for-your-design-generative-ai-free-png.png" id="1_qc4cd"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4lq86"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_qc4cd")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qc4cd"]
+height = 1.3149414
+
+[node name="Enemy" type="CharacterBody3D" groups=["enemies"]]
+script = ExtResource("1_4lq86")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(0.38604927, 0, 0, 0, 0.38604927, 0, 0, 0, 0.38604927, 0, 0.6438763, 0)
+billboard = 2
+sprite_frames = SubResource("SpriteFrames_4lq86")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6574707, 0)
+shape = SubResource("CapsuleShape3D_qc4cd")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+target_desired_distance = 3.0
+
+[connection signal="target_reached" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_target_reached"]
