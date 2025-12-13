@@ -5,7 +5,7 @@ const LERP_VALUE : float = 0.15
 
 var snap_vector : Vector3 = Vector3.DOWN
 var speed : float
-var vie : float = 50.0
+var vie : float = 100.0
 
 # --- VARIABLES DE MOUVEMENT ---
 @export_group("Movement variables")
@@ -13,6 +13,7 @@ var vie : float = 50.0
 @export var run_speed : float = 5.0
 @export var jump_strength : float = 15.0
 @export var gravity : float = 50.0
+@export var damage_attack : float = 30
 
 # --- VARIABLES DU DASH ---
 @export_group("Dash variables")
@@ -20,7 +21,7 @@ var vie : float = 50.0
 @export var dash_duration : float = 0.2    # Durée du dash (réglez aussi le Timer dans l'éditeur)
 var is_dashing : bool = false
 var dash_direction : Vector3 = Vector3.ZERO # Stocke la direction de la ruée
-
+var attack : bool = false
 # --- ANIMATION ---
 const ANIMATION_BLEND : float = 7.0
 
@@ -41,8 +42,7 @@ func _ready() -> void:
 	DashTimer.wait_time = dash_duration
 
 func _process(_delta: float) -> void:
-	var PG = Ui.get_node("ProgressBar")
-	PG.value = vie
+	
 	var shift = Ui.get_node("Panel")
 	if !is_dashing and dash_cooldown_timer.is_stopped():
 		shift.show()
@@ -63,8 +63,7 @@ func _physics_process(delta):
 		
 	else:
 		# Tenter de Dasher (uniquement si l'action est pressée et le joueur bouge)
-		if Input.is_action_just_pressed("dash") and move_direction.length_squared() > 0.0:
-			
+		if Input.is_action_just_pressed("dash") and !attack and move_direction.length_squared() > 0.0:	
 			if dash_cooldown_timer.is_stopped():
 				start_dash(move_direction)
 				dash_cooldown_timer.start()
@@ -76,11 +75,13 @@ func _physics_process(delta):
 			velocity.y -= gravity * delta
 			
 			# Application de la vitesse normale (walk_speed / run_speed)
+			
 			velocity.x = move_direction.x * speed
 			velocity.z = move_direction.z * speed
 			
+			
 			# Rotation du Mesh
-			if move_direction:
+			if move_direction and !attack:
 				player_mesh.rotation.y = lerp_angle(player_mesh.rotation.y, atan2(velocity.x, velocity.z), LERP_VALUE)
 
 		# --- LOGIQUE DE SAUT ET SNAP (si pas en dash) ---
@@ -94,12 +95,21 @@ func _physics_process(delta):
 	
 	# Application du mouvement final
 	# NOTE : Assurez-vous d'avoir la fonction apply_floor_snap() définie
-	if is_dashing:
+	if is_dashing and !attack:
 		animator.set("parameters/dash/transition_request", "dash")
-	else:
-		animator.set("parameters/dash/transition_request", "no")
-	
+	elif !attack:
+		animator.set("parameters/dash/transition_request", "locomotion")
+		
+	if Input.is_action_just_pressed("attack1") and !attack:
+		speed = 0
+		attack = true
+		animator.set("parameters/dash/transition_request", "attack")
+		await animator.animation_finished
+		attack = false
+		speed = run_speed
+		
 	apply_floor_snap() 
+	
 	move_and_slide()
 	animate(delta)
 
@@ -150,3 +160,18 @@ func animate(delta):
 		
 func damage(damage):
 	vie -= damage
+	var PG = Ui.get_node("ProgressBar")
+	PG.value = vie
+	check_death()
+	
+func check_death():
+   # Vérifie si la vie est à zéro ou en dessous
+	if vie <= 0:
+		# Exécute la logique de destruction
+		print("i'm dead")
+
+func _on_area_3d_body_entered(body: Node3D) -> void:
+	if attack:
+		if body.has_method("damage") and body.is_in_group("enemies"):
+			body.damage(damage_attack)
+	
