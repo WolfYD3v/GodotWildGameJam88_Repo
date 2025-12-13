@@ -1,7 +1,11 @@
 extends CharacterBody3D
+class_name Enemy
+
+signal killed(_enemy: Enemy)
 
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
 @onready var label: Label3D = $Label_vie
+@onready var navigation_agent_3d: NavigationAgent3D = $NavigationAgent3D
 
 @export_group("Random speed")
 @export var min_speed: float = 3.0
@@ -97,5 +101,6 @@ func damage(damage):
 func check_death():
 	# Vérifie si la vie est à zéro ou en dessous
 	if vie <= 0:
+		killed.emit(self)
 		# Exécute la logique de destruction
 		queue_free()

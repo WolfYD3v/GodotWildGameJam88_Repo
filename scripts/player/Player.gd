@@ -1,11 +1,13 @@
 extends CharacterBody3D
+class_name Player
 
 # --- PROPRIÉTÉS GLOBALES ---
 const LERP_VALUE : float = 0.15
 
 var snap_vector : Vector3 = Vector3.DOWN
 var speed : float
-var vie : float = 100.0
+var vie : float = 10000.0 # 100.0
+var experience: int = 0
 
 # --- VARIABLES DE MOUVEMENT ---
 @export_group("Movement variables")
