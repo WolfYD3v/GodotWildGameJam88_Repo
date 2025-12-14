@@ -106,7 +106,7 @@ func _physics_process(delta):
 		speed = 0
 		attack = true
 		animator.set("parameters/dash/transition_request", "attack")
-		await animator.animation_finished
+		await 0.5 #await animator.animation_finished
 		attack = false
 		speed = run_speed
 		

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dciwag04yxfxt"]
+[gd_scene load_steps=14 format=3 uid="uid://dciwag04yxfxt"]
 
 [ext_resource type="Script" uid="uid://dh4ciiipp0qqc" path="res://scripts/world.gd" id="1_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://cr2ersq7g6q6f" path="res://scenes/player.tscn" id="1_o5qli"]
@@ -36,6 +36,13 @@ uv1_triplanar = true
 [sub_resource type="PlaneMesh" id="PlaneMesh_sugp2"]
 size = Vector2(500, 500)
 
+[sub_resource type="SphereMesh" id="SphereMesh_jyhfs"]
+radius = 1.0
+height = 2.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jyhfs"]
+size = Vector3(5, 15, 15)
+
 [node name="main" type="Node3D"]
 script = ExtResource("1_jyhfs")
 
@@ -50,9 +57,11 @@ environment = SubResource("Environment_sugp2")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3198133, 0.00093888445, 1.8691077)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+visible = false
 navigation_mesh = SubResource("NavigationMesh_sugp2")
 
 [node name="maps" type="Node3D" parent="NavigationRegion3D"]
+visible = false
 
 [node name="floor" type="StaticBody3D" parent="NavigationRegion3D/maps"]
 
@@ -85,4 +94,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 5.5)
 [node name="énemy3" parent="Node3D" instance=ExtResource("3_sugp2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 5.5)
 
+[node name="RandomMap" type="Node3D" parent="."]
+
+[node name="SectionPositionMarker3D" type="Marker3D" parent="RandomMap"]
+
+[node name="IndicatorMeshInstance3D" type="MeshInstance3D" parent="RandomMap/SectionPositionMarker3D"]
+mesh = SubResource("SphereMesh_jyhfs")
+
+[node name="GenerateMoreSectionsArea3D" type="Area3D" parent="RandomMap"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RandomMap/GenerateMoreSectionsArea3D"]
+shape = SubResource("BoxShape3D_jyhfs")
+debug_color = Color(0.5921569, 0, 1, 1)
+
 [node name="ExperienceParticules" type="Node3D" parent="."]
+
+[connection signal="body_entered" from="RandomMap/GenerateMoreSectionsArea3D" to="." method="_on_generate_more_sections_area_3d_body_entered"]
