@@ -17,6 +17,7 @@ var upgreades_area_tween = null
 func _ready() -> void:
 	upgrades_area_open = false
 	upgrades_area.size.y = upgrades_area_min_height
+	show()
 
 func _on_upgrades_button_pressed() -> void:
 	upgrades_area_open = true
