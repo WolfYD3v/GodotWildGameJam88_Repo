@@ -162,7 +162,7 @@ func animate(delta):
 		
 func damage(damage):
 	vie -= damage
-	var PG = Ui.get_node("ProgressBar")
+	var PG = Ui.progress_bar
 	PG.value = vie
 	check_death()
 	
