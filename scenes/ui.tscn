@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://c5uepl5ppwyrn"]
+[gd_scene load_steps=6 format=3 uid="uid://c5uepl5ppwyrn"]
+
+[ext_resource type="Script" uid="uid://ebia3yvsddsf" path="res://scripts/ui.gd" id="1_nt7q6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xlq6p"]
 content_margin_left = 2.0
@@ -12,6 +14,43 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 corner_detail = 6
 
+[sub_resource type="Animation" id="Animation_nt7q6"]
+resource_name = "bounce"
+length = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.025, 0.1, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.5, 1.1), Vector2(1.5, 1.1), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_x4jx1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x4jx1"]
+_data = {
+&"RESET": SubResource("Animation_x4jx1"),
+&"bounce": SubResource("Animation_nt7q6")
+}
+
 [node name="UI" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -20,20 +59,39 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("1_nt7q6")
 
-[node name="ProgressBar" type="ProgressBar" parent="."]
+[node name="TopArea" type="ColorRect" parent="."]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
+anchors_preset = 10
 anchor_right = 1.0
-offset_left = -310.0
-offset_top = 19.0
-offset_right = -26.0
-offset_bottom = 46.0
-grow_horizontal = 0
+offset_bottom = 70.0
+grow_horizontal = 2
+
+[node name="Nodes" type="HBoxContainer" parent="TopArea"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="TopArea/Nodes"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_colors/font_color = Color(0.9490196, 1, 0.9490196, 1)
 theme_override_styles/fill = SubResource("StyleBoxFlat_xlq6p")
 value = 100.0
+
+[node name="UpgradesButton" type="Button" parent="TopArea/Nodes"]
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+text = "UPGRADES"
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -57,3 +115,47 @@ text = "shift"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_lock_ = true
+
+[node name="UpgradesArea" type="Control" parent="."]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 150.0
+grow_horizontal = 2
+
+[node name="Background" type="ColorRect" parent="UpgradesArea"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CloseUpgradeAreaButton" type="Button" parent="UpgradesArea"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -8.0
+offset_bottom = 8.0
+grow_horizontal = 0
+focus_mode = 0
+text = "X"
+
+[node name="UpgradeCards" type="HBoxContainer" parent="UpgradesArea"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -23.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_x4jx1")
+}
+
+[connection signal="pressed" from="TopArea/Nodes/UpgradesButton" to="." method="_on_upgrades_button_pressed"]
+[connection signal="pressed" from="UpgradesArea/CloseUpgradeAreaButton" to="." method="_on_close_upgrade_area_button_pressed"]
