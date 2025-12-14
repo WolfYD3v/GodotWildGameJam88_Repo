@@ -87,7 +87,7 @@ func _add_map_section() -> void:
 	section_idx += 1
 	# Re-positionnage de la section par rapport à celle du section_position_marker_3d
 	section_added.position.x = section_position_marker_3d.position.x * 2
-	section_scale_x = section_added.scale.x
+	section_scale_x = 40.0
 	section_position_marker_3d.position.x += section_scale_x / 2
 
 # Supprime une section de la map de la section pool
