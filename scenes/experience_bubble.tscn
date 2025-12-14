@@ -1,40 +1,61 @@
-[gd_scene load_steps=5 format=3 uid="uid://s46ftkewddgi"]
+[gd_scene load_steps=9 format=3 uid="uid://s46ftkewddgi"]
 
 [ext_resource type="Script" uid="uid://dq7xrs88a0nor" path="res://scripts/experience_bubble.gd" id="1_41w23"]
 [ext_resource type="Texture2D" uid="uid://bngjjx8vxwrjf" path="res://assets/sprites/experience_orb.png" id="2_fgp6g"]
+[ext_resource type="Shader" uid="uid://bjw6jtd6insfr" path="res://resources/shaders/outline.gdshader" id="3_uotow"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_41w23"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_fgp6g"]
 radius = 0.7
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uotow"]
+render_priority = 0
+shader = ExtResource("3_uotow")
+shader_parameter/color = Color(0, 0.03137255, 0, 1)
+shader_parameter/thickness = 0.27999999374144
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uad16"]
+next_pass = SubResource("ShaderMaterial_uotow")
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("2_fgp6g")
+emission_enabled = true
+emission = Color(0, 1, 0.15686275, 1)
+emission_energy_multiplier = 8.95
+uv1_triplanar = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_00d3b"]
+
 [node name="ExperienceBubble" type="CharacterBody3D"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 script = ExtResource("1_41w23")
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
-billboard = 2
-texture = ExtResource("2_fgp6g")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Sprite3D"]
-light_color = Color(0, 1, 0, 1)
-light_energy = 8.0
-sky_mode = 1
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+visible = false
 shape = SubResource("SphereShape3D_41w23")
 
 [node name="Area3D" type="Area3D" parent="."]
+visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 shape = SubResource("SphereShape3D_fgp6g")
 
 [node name="CollectedAudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0.6, 0)
 
 [node name="SpawnAudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0.6, 0)
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 target_desired_distance = 3.0
 avoidance_enabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, 0, 0.6, 0)
+material_override = SubResource("StandardMaterial3D_uad16")
+mesh = SubResource("SphereMesh_00d3b")
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

@@ -4,14 +4,14 @@ class_name ExperienceBubble
 @onready var collected_audio_stream_player_3d: AudioStreamPlayer3D = $CollectedAudioStreamPlayer3D
 @onready var spawn_audio_stream_player_3d: AudioStreamPlayer3D = $SpawnAudioStreamPlayer3D
 @onready var navigation_agent_3d: NavigationAgent3D = $NavigationAgent3D
-
+var gravity = 50.0
 var player: Player = null
 var experience_stored: int = 0
 
 func _ready() -> void:
 	spawn_audio_stream_player_3d.play()
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if player:
 		navigation_agent_3d.target_position = player.global_transform.origin
 		var current_location = global_transform.origin
@@ -20,6 +20,7 @@ func _physics_process(_delta: float) -> void:
 		
 		velocity = new_velocity
 		velocity.angle_to(player.global_transform.origin)
+		velocity.y -= gravity * delta
 		move_and_slide()
 
 func _on_area_3d_body_entered(body: Node3D) -> void:
@@ -27,7 +28,6 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 		collected_audio_stream_player_3d.play()
 		player.experience += experience_stored
 		queue_free()
-
 
 func _on_navigation_agent_3d_velocity_computed(safe_velocity: Vector3) -> void:
 	velocity = velocity.move_toward(safe_velocity, .25)
