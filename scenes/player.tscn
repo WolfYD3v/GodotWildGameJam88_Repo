@@ -1,12 +1,76 @@
-[gd_scene load_steps=28 format=3 uid="uid://cr2ersq7g6q6f"]
+[gd_scene load_steps=27 format=3 uid="uid://cr2ersq7g6q6f"]
 
 [ext_resource type="Script" uid="uid://0e27yrlf8w80" path="res://scripts/player/Player.gd" id="1_hn6di"]
 [ext_resource type="Script" uid="uid://cf465dgqafdbt" path="res://scripts/player/SpringArmPivot.gd" id="2_f8ihf"]
 [ext_resource type="Texture2D" uid="uid://cssevliax3ykc" path="res://assets/sprites/player/idle_up.png" id="3_qhqgy"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_tuyoq"]
+atlas = ExtResource("3_qhqgy")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fjrip"]
+atlas = ExtResource("3_qhqgy")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
+atlas = ExtResource("3_qhqgy")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ur7pv"]
+atlas = ExtResource("3_qhqgy")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y4r1p"]
+atlas = ExtResource("3_qhqgy")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d2wvv"]
+atlas = ExtResource("3_qhqgy")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3v2ag"]
+atlas = ExtResource("3_qhqgy")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jej6c"]
+atlas = ExtResource("3_qhqgy")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f1ej7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tuyoq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fjrip")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smehm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ur7pv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y4r1p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d2wvv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3v2ag")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jej6c")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}]
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_k6p7c"]
 radius = 0.283343
-height = 1.5186589
+height = 1.3747818
 
 [sub_resource type="Animation" id="Animation_dqkch"]
 resource_name = "idle up"
@@ -94,87 +158,31 @@ nodes/Animation/node = SubResource("AnimationNodeAnimation_oprun")
 nodes/Animation/position = Vector2(600, 540)
 node_connections = [&"output", 0, &"dash", &"ground_air_transition", 0, &"iwr_blend", &"ground_air_transition", 1, &"Air", &"iwr_blend", 0, &"Idle", &"iwr_blend", 1, &"Walk", &"iwr_blend", 2, &"Run", &"dash", 0, &"ground_air_transition", &"dash", 1, &"dash anim", &"dash", 2, &"Animation"]
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_f1ej7"]
-radial_segments = 10
-
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_jej6c"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tuyoq"]
-atlas = ExtResource("3_qhqgy")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fjrip"]
-atlas = ExtResource("3_qhqgy")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
-atlas = ExtResource("3_qhqgy")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ur7pv"]
-atlas = ExtResource("3_qhqgy")
-region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_y4r1p"]
-atlas = ExtResource("3_qhqgy")
-region = Rect2(256, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_d2wvv"]
-atlas = ExtResource("3_qhqgy")
-region = Rect2(0, 64, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3v2ag"]
-atlas = ExtResource("3_qhqgy")
-region = Rect2(64, 64, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jej6c"]
-atlas = ExtResource("3_qhqgy")
-region = Rect2(128, 64, 64, 64)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_f1ej7"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tuyoq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fjrip")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_smehm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ur7pv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_y4r1p")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_d2wvv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3v2ag")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jej6c")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 10.0
-}]
+height = 0.51293945
+radius = 0.3076172
 
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 script = ExtResource("1_hn6di")
 
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(1.5685437, 0, 0, 0, 1.5685437, 0, 0, 0, 1.5685437, 0, 0.49944216, 0)
+billboard = 2
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_f1ej7")
+animation = &"idle"
+frame_progress = 0.65461254
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7583905, 0)
+transform = Transform3D(0.59712166, 0, 0, 0, 0.59712166, 0, 0, 0, 0.59712166, 0, 0.4180966, 0)
 shape = SubResource("CapsuleShape3D_k6p7c")
 
 [node name="SpringArmPivot" type="Node3D" parent="."]
+transform = Transform3D(0.59712166, 0, 0, 0, 0.59712166, 0, 0, 0, 0.59712166, 0, 0.008201271, 0)
 script = ExtResource("2_f8ihf")
 
 [node name="SpringArm3D" type="SpringArm3D" parent="SpringArmPivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6027219, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1793268, 0)
 spring_length = 6.0
 
 [node name="Camera3D" type="Camera3D" parent="SpringArmPivot/SpringArm3D"]
@@ -203,22 +211,10 @@ one_shot = true
 [node name="DashCooldownTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.04019276, -0.22833456, -0.030160189, -0.038306616, -0.15679543, -0.037151854, 0.0072540045, 0.43715057, -0.029078862, 0.44580013, 0.79927427, -0.5216782)
-mesh = SubResource("CylinderMesh_f1ej7")
-skeleton = NodePath("")
+[node name="Area3D" type="Area3D" parent="."]
 
-[node name="Area3D" type="Area3D" parent="MeshInstance3D"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6114502, -0.30649722)
 shape = SubResource("CylinderShape3D_jej6c")
 
-[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
-transform = Transform3D(2.626841, 0, 0, 0, 2.626841, 0, 0, 0, 2.626841, 0, 0.8226814, 0)
-billboard = 2
-texture_filter = 0
-sprite_frames = SubResource("SpriteFrames_f1ej7")
-animation = &"idle"
-frame_progress = 0.65461254
-
-[connection signal="body_entered" from="MeshInstance3D/Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
